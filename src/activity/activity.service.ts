@@ -1,0 +1,43 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from 'src/auth/schemas/user.schema';
+import { CreateActivityDto } from './dto/create-activity.dto';
+
+import { Activity } from './schemas/activity.schema';
+
+@Injectable()
+export class ActivityService {
+  constructor(
+    @InjectModel(Activity.name)
+    private activityModel: Model<Activity>,
+  ) {}
+
+  async findAll(): Promise<Activity[]> {
+    const activities = await this.activityModel.find();
+    return activities;
+  }
+
+  async create(activity: Activity, user: User): Promise<Activity> {
+    const data = Object.assign(activity, { user: user._id });
+
+    const res = await this.activityModel.create(data);
+    return res;
+  }
+
+  // async create(activity: Activity, user: User): Promise<Activity> {
+  //   const data = Object.assign(activity, { user: user._id });
+  //   const activityCreated = await this.activityModel.create(data);
+  //   return activityCreated;
+  // }
+
+  async findById(id: string): Promise<Activity> {
+    const activity = await this.activityModel.findById(id);
+
+    if (!Activity) {
+      throw new NotFoundException('Activity not found');
+    }
+
+    return activity;
+  }
+}
