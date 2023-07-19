@@ -6,11 +6,11 @@ import {
   MinLength,
 } from 'class-validator';
 import { User } from 'src/auth/schemas/user.schema';
+import { Category } from '../schemas/activity.schema';
 
 export class CreateActivityDto {
   @IsNotEmpty()
-  @IsString()
-  readonly type: string;
+  readonly category: Category;
 
   @IsNotEmpty()
   @IsString()

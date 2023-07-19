@@ -4,20 +4,27 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
-import { Activity } from './schemas/activity.schema';
+import { Activity, Category } from './schemas/activity.schema';
 
 @Controller('activity')
 export class ActivityController {
   constructor(private activityService: ActivityService) {}
 
   @Get()
-  async getAllActivities(): Promise<Activity[]> {
+  async getAllActivities(
+    @Query('category') category: Category,
+  ): Promise<Activity[]> {
+    if (category) {
+      return this.activityService.findByCategory(category);
+    }
+
     return this.activityService.findAll();
   }
 

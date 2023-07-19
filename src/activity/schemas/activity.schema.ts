@@ -3,12 +3,19 @@ import { Type } from 'class-transformer';
 import mongoose, { Document } from 'mongoose';
 import { User } from 'src/auth/schemas/user.schema';
 
-export type ActivityDocument = Document & Activity;
+export enum Category {
+  HIKING = 'randonnée',
+  SURF = 'surf',
+  YOGA = 'yoga',
+  BIKING = 'vélo',
+  CLIMBING = 'escalade',
+  TRAIL = 'trail',
+}
 
 @Schema()
 export class Activity {
   @Prop({ required: true })
-  type: string;
+  category: Category;
 
   @Prop({ required: true })
   location: string;
