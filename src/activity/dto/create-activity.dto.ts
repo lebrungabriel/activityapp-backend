@@ -24,7 +24,7 @@ export class CreateActivityDto {
 
   @IsNotEmpty()
   @IsInt()
-  readonly price: number;
+  readonly price: string;
 
   @IsEmpty({ message: 'You cannot pass user id' })
   readonly user: User;
