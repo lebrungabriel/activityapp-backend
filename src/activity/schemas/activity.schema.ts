@@ -24,7 +24,7 @@ export class Activity {
   description: string;
 
   @Prop({ required: true })
-  price: string;
+  price: number;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
   @Type(() => User)
